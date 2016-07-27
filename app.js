@@ -4,7 +4,7 @@ var root = __dirname;
 var path = require('path');
 
 
-app.use(express.static('public'));
+app.use(express.static(root));
 
 app.get('/', function(req, res) {
   res.sendFile(path.join(root + '/public/example_simple_exportwav.html'));
