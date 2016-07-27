@@ -4,7 +4,7 @@
   "description": "A plugin for recording/exporting the output of Web Audio API nodes",
   "main": "lib/index.js",
   "scripts": {
-    "start": "node lib/index.js",
+    "start": "node app.js",
     "build": "npm run build:lib && npm run build:browserify",
     "build:lib": "babel src/ -d lib/",
     "build:browserify": "browserify lib/index.js -t babelify --outfile dist/recorder.js -s Recorder",
@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/zlokomatic/Recorderjs#readme",
   "dependencies": {
+    "express": "^4.14.0",
     "inline-worker": "^0.1.0"
   },
   "devDependencies": {
@@ -35,5 +36,8 @@
       "es2015",
       "stage-0"
     ]
+  },
+  "directories": {
+    "example": "examples"
   }
 }
