@@ -1,7 +1,8 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Recorder = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 "use strict";
-
+var lamejs = require("lamejs");
 module.exports = require("./recorder").Recorder;
+
 
 },{"./recorder":2}],2:[function(require,module,exports){
 'use strict';
@@ -117,6 +118,18 @@ var Recorder = exports.Recorder = (function () {
                 recLength += inputBuffer[0].length;
             }
 
+            function encodeMP3(samples) {
+              var mp3Data = [];
+              var mp3encoder = new lamejs.Mp3Encoder(1, 44100, 128); //mono 44.1khz encode to 128kbps
+              var mp3Tmp = mp3encoder.encodeBuffer(samples); //encode mp3
+
+              mp3Data.push(mp3Tmp);
+
+              mp3Tmp = mp3encoder.flush();
+
+              return mp3Data.push(new Int8Array(mp3Tmp));
+            }
+
             function exportWAV(type) {
                 var buffers = [];
                 for (var channel = 0; channel < numChannels; channel++) {
@@ -130,9 +143,13 @@ var Recorder = exports.Recorder = (function () {
                     interleaved = buffers[0];
                 }
                 // console.log(interleaved);
-                var dataview = encodeWAV(interleaved);
+                // var dataview = encodeWAV(interleaved);
+                var dataview = encodeMP3(interleaved);
+
+
+
                 // console.log(dataview);
-                var audioBlob = new Blob([dataview], { type: type });
+                var audioBlob = new Blob(dataview, { type: 'audio/mp3' });
 
                 self.postMessage({ command: 'exportWAV', data: audioBlob });
             }
