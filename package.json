@@ -2,7 +2,7 @@
   "name": "recorderjs",
   "version": "0.1.0",
   "description": "A plugin for recording/exporting the output of Web Audio API nodes",
-  "main": "lib/index.js",
+  "main": "app.js",
   "scripts": {
     "start": "node app.js",
     "build": "npm run build:lib && npm run build:browserify",
