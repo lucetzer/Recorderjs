@@ -85,6 +85,7 @@ export class Recorder {
                 let interleaved;
                 if (numChannels === 2) {
                     interleaved = interleave(buffers[0], buffers[1]);
+                    __log(interleaved);
                 } else {
                     interleaved = buffers[0];
                 }
@@ -121,6 +122,7 @@ export class Recorder {
                     result.set(recBuffers[i], offset);
                     offset += recBuffers[i].length;
                 }
+                __log(result);
                 return result;
             }
 

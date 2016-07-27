@@ -63,6 +63,7 @@ var Recorder = exports.Recorder = (function () {
             for (var channel = 0; channel < _this.config.numChannels; channel++) {
                 buffer.push(e.inputBuffer.getChannelData(channel));
             }
+            console.log(buffer);
             _this.worker.postMessage({
                 command: 'record',
                 buffer: buffer
@@ -106,9 +107,13 @@ var Recorder = exports.Recorder = (function () {
             }
 
             function record(inputBuffer) {
+                console.log("input buffers below");
+                console.log(inputBuffer);
                 for (var channel = 0; channel < numChannels; channel++) {
                     recBuffers[channel].push(inputBuffer[channel]);
                 }
+                console.log("after buffer is pushed to recBuffers");
+                console.log(recBuffers);
                 recLength += inputBuffer[0].length;
             }
 
@@ -117,13 +122,16 @@ var Recorder = exports.Recorder = (function () {
                 for (var channel = 0; channel < numChannels; channel++) {
                     buffers.push(mergeBuffers(recBuffers[channel], recLength));
                 }
+                // console.log(buffers);
                 var interleaved = undefined;
                 if (numChannels === 2) {
                     interleaved = interleave(buffers[0], buffers[1]);
                 } else {
                     interleaved = buffers[0];
                 }
+                // console.log(interleaved);
                 var dataview = encodeWAV(interleaved);
+                // console.log(dataview);
                 var audioBlob = new Blob([dataview], { type: type });
 
                 self.postMessage({ command: 'exportWAV', data: audioBlob });
@@ -146,12 +154,15 @@ var Recorder = exports.Recorder = (function () {
             function initBuffers() {
                 for (var channel = 0; channel < numChannels; channel++) {
                     recBuffers[channel] = [];
-                }
+                };
             }
 
             function mergeBuffers(recBuffers, recLength) {
                 var result = new Float32Array(recLength);
                 var offset = 0;
+                // console.log(recLength);
+                // console.log("recbuffers below");
+                // console.log(recBuffers);
                 for (var i = 0; i < recBuffers.length; i++) {
                     result.set(recBuffers[i], offset);
                     offset += recBuffers[i].length;
