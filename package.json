@@ -4,7 +4,7 @@
   "description": "A plugin for recording/exporting the output of Web Audio API nodes",
   "main": "lib/index.js",
   "scripts": {
-    "start": "open examples/example_simple_exportwav.html",
+    "start": "node lib/index.js",
     "build": "npm run build:lib && npm run build:browserify",
     "build:lib": "babel src/ -d lib/",
     "build:browserify": "browserify lib/index.js -t babelify --outfile dist/recorder.js -s Recorder",
