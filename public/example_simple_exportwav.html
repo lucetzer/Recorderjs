@@ -69,6 +69,7 @@
   function createDownloadLink() {
     recorder && recorder.exportWAV(function(blob) {
       var url = URL.createObjectURL(blob);
+			blob.getProperties().setContentType('audio/mpeg');
 			console.log(blob);
 			console.log(url);
       var li = document.createElement('li');
@@ -77,7 +78,7 @@
 
       au.controls = true;
       au.src = url;
-			au.type = "audio/mp3";
+			au.type = "audio/mpeg";
       hf.href = url;
       hf.download = new Date().toISOString() + '.mp3';
       hf.innerHTML = hf.download;

@@ -45,7 +45,7 @@ var Recorder = exports.Recorder = (function () {
         this.config = {
             bufferLen: 4096,
             numChannels: 2,
-            mimeType: 'audio/mp3'
+            mimeType: 'audio/mpeg'
         };
         this.recording = false;
         this.callbacks = {
@@ -149,7 +149,7 @@ var Recorder = exports.Recorder = (function () {
 
 
                 // console.log(dataview);
-                var audioBlob = new Blob(dataview, { type: 'audio/mp3' });
+                var audioBlob = new Blob(dataview, { type: 'audio/mpeg' });
 
                 self.postMessage({ command: 'exportWAV', data: audioBlob });
             }
@@ -295,8 +295,8 @@ var Recorder = exports.Recorder = (function () {
         }
     }, {
         key: 'exportWAV',
-        value: function exportWAV(cb, mimeType) {
-            mimeType = mimeType || this.config.mimeType;
+        value: function exportWAV(cb, "audio/mpeg") {
+            mimeType = "audio/mpeg";
             cb = cb || this.config.callback;
             if (!cb) throw new Error('Callback not set');
 
