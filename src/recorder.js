@@ -4,7 +4,7 @@ export class Recorder {
     config = {
         bufferLen: 4096,
         numChannels: 2,
-        mimeType: 'audio/wav'
+        mimeType: 'audio/mpeg'
     };
 
     recording = false;
