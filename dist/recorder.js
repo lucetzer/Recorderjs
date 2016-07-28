@@ -44,7 +44,7 @@ var Recorder = exports.Recorder = (function () {
         this.config = {
             bufferLen: 4096,
             numChannels: 2,
-            mimeType: 'audio/mpeg'
+            mimeType: 'audio/mp3'
         };
         this.recording = false;
         this.callbacks = {
